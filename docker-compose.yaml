@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     container_name: secunda_alembic
     command: sh -c "./init-db.sh && alembic -c /app/alembic.ini upgrade head"
-    env_file: .env
+    env_file: .env.docker
     environment:
       PYTHONPATH: /app
       PGPASSWORD: ${POSTGRES_PASSWORD}
