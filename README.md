@@ -16,10 +16,14 @@ pipx install poetry
 cd secunda_assignment
 # Install dependencies
 poetry install
+# Get poetry shell
+eval $(poetry env activate)
 
 # Provide dotenv configuration
 cp .env.example .env.local
 cp .env.example .env.docker
+set -a; . ./.env.local; set +a
+
 # Replace the database hostname
 sed -i "s/\<localhost\>/db/g" .env.docker
 
@@ -27,8 +31,7 @@ sed -i "s/\<localhost\>/db/g" .env.docker
 docker compose up -d db
 PGPASSWORD=<db_password> psql -hlocalhost -p5432 -Uapp_user app_db < src/secunda_assignment/storage/sql/init.sql
 
-# Populate the database (exposed on localhost)
-set -a; . ./.env.local; set +a
+# Populate the database
 python -m secunda_assignment.seed
 
 # Run the app in production mode
@@ -57,3 +60,5 @@ python -m secunda_assignment.seed
 # Monitor logs
 docker compose logs -f
 ```
+
+You can observe the application API endpoints at http://localhost:8000/docs
