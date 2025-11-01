@@ -11,6 +11,7 @@ router = APIRouter(prefix=f"/organizations", tags=["Organizations"])
 
 def get_organization_repo(session: AsyncSession = Depends(get_async_session)):
     """Dependency to provide the OrganizationRepository instance."""
+
     return OrganizationRepository(session=session)
 
 
@@ -22,6 +23,7 @@ async def create_organization(
     repo: OrganizationRepository = Depends(get_organization_repo),
 ):
     """Create a new organization."""
+
     try:
         org = await repo.create(org_schema=org_schema)
         return org
@@ -37,9 +39,7 @@ async def get_all_organizations(
     limit: int = 100,
     repo: OrganizationRepository = Depends(get_organization_repo),
 ):
-    """
-    Get all organizations.
-    """
+    """Get all organizations with pagination."""
 
     orgs = await repo.get_all(skip=skip, limit=limit)
     return orgs
@@ -65,9 +65,8 @@ async def get_organizations_by_building(
     building_id: int,
     repo: OrganizationRepository = Depends(get_organization_repo),
 ):
-    """
-    Get all organizations located in a building given by its ID.
-    """
+    """Get all organizations located in a building given by its ID."""
+
     orgs = await repo.get_by_building_id(building_id=building_id)
     return orgs
 
@@ -89,9 +88,8 @@ async def get_organizations_by_category(
 async def get_organization(
     org_id: int, repo: OrganizationRepository = Depends(get_organization_repo)
 ):
-    """
-    Get a specific organization by its ID.
-    """
+    """Get a specific organization by its ID."""
+
     org = await repo.get_by_id(org_id=org_id)
     if org is None:
         raise HTTPException(

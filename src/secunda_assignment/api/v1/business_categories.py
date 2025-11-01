@@ -14,6 +14,7 @@ router = APIRouter(prefix=f"/business_categories", tags=["Business Categories"])
 
 def get_business_category_repo(session: AsyncSession = Depends(get_async_session)):
     """Dependency to provide the BusinessCategoryRepository instance."""
+
     return BusinessCategoryRepository(session=session)
 
 
@@ -27,6 +28,7 @@ async def create_business_category(
     repo: BusinessCategoryRepository = Depends(get_business_category_repo),
 ):
     """Create a new business category."""
+
     try:
         db_business_category = await repo.create(
             business_category_schema=business_category
@@ -45,9 +47,8 @@ async def get_all_business_categories(
     limit: int = 100,
     repo: BusinessCategoryRepository = Depends(get_business_category_repo),
 ):
-    """
-    Get all business_categories.
-    """
+    """Get all business_categories with pagination."""
+
     db_orgs = await repo.get_all(skip=skip, limit=limit)
     return db_orgs
 
@@ -57,9 +58,8 @@ async def get_business_category(
     business_category_id: int,
     repo: BusinessCategoryRepository = Depends(get_business_category_repo),
 ):
-    """
-    Get a specific business_category by its ID.
-    """
+    """Get a specific business_category by its ID."""
+
     db_business_category = await repo.get_by_id(
         business_category_id=business_category_id
     )

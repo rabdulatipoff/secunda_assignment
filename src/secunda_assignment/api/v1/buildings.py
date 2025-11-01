@@ -11,6 +11,7 @@ router = APIRouter(prefix=f"/buildings", tags=["Buildings"])
 
 def get_building_repo(session: AsyncSession = Depends(get_async_session)):
     """Dependency to provide the BuildingRepository instance."""
+
     return BuildingRepository(session=session)
 
 
@@ -22,6 +23,7 @@ async def create_building(
     repo: BuildingRepository = Depends(get_building_repo),
 ):
     """Create a new building."""
+
     try:
         db_building = await repo.create(building_schema=building)
         return db_building
@@ -38,9 +40,8 @@ async def get_all_buildings(
     limit: int = 100,
     repo: BuildingRepository = Depends(get_building_repo),
 ):
-    """
-    Get all buildings.
-    """
+    """Get all buildings with pagination."""
+
     db_orgs = await repo.get_all(skip=skip, limit=limit)
     return db_orgs
 
@@ -49,9 +50,8 @@ async def get_all_buildings(
 async def get_building(
     building_id: int, repo: BuildingRepository = Depends(get_building_repo)
 ):
-    """
-    Get a specific building by its ID.
-    """
+    """Get a specific building by its ID."""
+
     db_building = await repo.get_by_id(building_id=building_id)
     if db_building is None:
         raise HTTPException(
@@ -66,7 +66,7 @@ async def update_building(
     building_schema: schemas.BuildingUpdate,
     repo: BuildingRepository = Depends(get_building_repo),
 ):
-    """Update an building."""
+    """Update a building."""
 
     try:
         updated_building = await repo.update(
@@ -86,7 +86,7 @@ async def update_building(
 async def delete_building(
     building_id: int, repo: BuildingRepository = Depends(get_building_repo)
 ):
-    """Delete an building."""
+    """Delete a building."""
 
     building = await repo.get_by_id(building_id=building_id)
     if building is None:

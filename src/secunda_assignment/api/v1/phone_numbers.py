@@ -14,6 +14,7 @@ router = APIRouter(prefix=f"/phones", tags=["Phone Numbers"])
 
 def get_phone_number_repo(session: AsyncSession = Depends(get_async_session)):
     """Dependency to provide the PhoneNumberRepository instance."""
+
     return PhoneNumberRepository(session=session)
 
 
@@ -25,6 +26,7 @@ async def create_phone_number(
     repo: PhoneNumberRepository = Depends(get_phone_number_repo),
 ):
     """Create a new phone number for an organization."""
+
     try:
         db_phone = await repo.create(phone_schema=phone)
         return db_phone
@@ -40,9 +42,8 @@ async def get_all_phone_numbers(
     limit: int = 100,
     repo: PhoneNumberRepository = Depends(get_phone_number_repo),
 ):
-    """
-    Get all phone numbers.
-    """
+    """Get all phone numbers with pagination."""
+
     db_orgs = await repo.get_all(skip=skip, limit=limit)
     return db_orgs
 
@@ -51,9 +52,8 @@ async def get_all_phone_numbers(
 async def get_phone_number(
     phone_id: int, repo: PhoneNumberRepository = Depends(get_phone_number_repo)
 ):
-    """
-    Get a specific phone number by its ID.
-    """
+    """Get a specific phone number by its ID."""
+
     db_phone = await repo.get_by_id(phone_id=phone_id)
     if db_phone is None:
         raise HTTPException(
