@@ -47,7 +47,13 @@ async def get_all_organizations(
 
 @router.get("/by-name", response_model=schemas.OrganizationRead)
 async def get_organization_by_name(
-    name: str = Query(..., description="Exact organization name"),
+    name: str = Query(
+        ...,
+        description="Exact organization name",
+        examples=[
+            "Horns & Hoofs",
+        ],
+    ),
     repo: OrganizationRepository = Depends(get_organization_repo),
 ):
     """Get an organization by its exact name."""
@@ -74,7 +80,9 @@ async def get_organizations_by_building(
 @router.get("/by-category", response_model=list[schemas.OrganizationRead])
 async def get_organizations_by_category(
     path: str = Query(
-        ..., description="Ltree path (e.g. 'food.fast.pizza')", example="food"
+        ...,
+        description="Ltree path (e.g. 'food.fast.pizza')",
+        examples=["food", "services.plumbing"],
     ),
     repo: OrganizationRepository = Depends(get_organization_repo),
 ):
