@@ -38,6 +38,7 @@ class BusinessCategoryUpdate(BaseModel):
     @classmethod
     def validate_path_depth(cls, v: str | None) -> str | None:
         """Ensure the Ltree path depth is less than 3."""
+
         if v:
             depth = len(v.split("."))
             if depth > 3:
