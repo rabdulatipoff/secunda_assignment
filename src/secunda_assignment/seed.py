@@ -153,7 +153,7 @@ async def seed_data():
                 name="Чайхона АЗИЯ ХАЛЯЛЬ",
                 building=buildings[2],
                 phone_numbers=[
-                    PhoneNumber(number="+7-925-433-30-06", phone_type="main"),
+                    PhoneNumber(number="tel:+7-925-433-30-06", phone_type="main"),
                 ],
                 business_categories=[c_restaurant],
             )
@@ -162,7 +162,7 @@ async def seed_data():
                 name="Папа Джонс",
                 building=buildings[3],
                 phone_numbers=[
-                    PhoneNumber(number="+7-964-628-63-14", phone_type="main"),
+                    PhoneNumber(number="tel:+7-964-628-63-14", phone_type="main"),
                 ],
                 business_categories=[c_fast_food, c_pizza],
             )
