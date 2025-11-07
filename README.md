@@ -4,7 +4,7 @@ A FastAPI-based "yellow pages" application implementing an asynchronous API for 
 - All models/schemas are type-checked and validated where necessary
 - Each organization has a name, a residential building, may have multiple phones and business categories assigned to it
 - Each building has a name and a coordinate point, specifying its location
-- Phone numbers has a type and its organization ID
+- Phone numbers have a type and an organization ID
 - Business categories have a name and can be nested (up to 3 levels of depth)
 
 ## Local Installation
